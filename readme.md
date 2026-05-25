@@ -12,6 +12,12 @@ devices. It adds predictive-efficiency telemetry, autonomous frequency autotunin
 and an optional Ollama research companion agent while preserving the upstream
 ESP-Miner firmware base.
 
+## Cypher Quick Links
+
+- Flash/install guide: [`FLASHING_CYPHER.md`](./FLASHING_CYPHER.md)
+- Predictive efficiency notes: [`doc/gamma_predictive_efficiency.md`](./doc/gamma_predictive_efficiency.md)
+- Ollama companion agent: [`doc/ollama_research_agent.md`](./doc/ollama_research_agent.md)
+
 esp-miner is open source ESP32 firmware for the [Bitaxe](https://github.com/bitaxeorg/bitaxe)
 
 If you are looking for premade images to load on your Bitaxe, check out the [latest release](https://github.com/bitaxeorg/ESP-Miner/releases/latest) page. Maybe you want [instructions](https://github.com/bitaxeorg/ESP-Miner/blob/master/flashing.md) for loading factory images.
