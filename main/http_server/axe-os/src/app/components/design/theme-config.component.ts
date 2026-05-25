@@ -57,6 +57,33 @@ export class ThemeConfigComponent implements OnInit {
   currentColor: string = '';
   themes: ThemeOption[] = [
     {
+      name: 'Cypher',
+      primaryColor: '#00ff95',
+      accentColors: {
+        '--primary-color': '#00ff95',
+        '--primary-color-text': '#04100b',
+        '--highlight-bg': '#00ff95',
+        '--highlight-text-color': '#04100b',
+        '--focus-ring': '0 0 0 0.2rem rgba(0,255,149,0.22)',
+        '--slider-bg': '#dee2e6',
+        '--slider-range-bg': '#00ff95',
+        '--slider-handle-bg': '#00ff95',
+        '--progressbar-bg': '#dee2e6',
+        '--progressbar-value-bg': '#00ff95',
+        '--checkbox-border': '#00ff95',
+        '--checkbox-bg': '#00ff95',
+        '--checkbox-hover-bg': '#00d982',
+        '--button-bg': '#00ff95',
+        '--button-hover-bg': '#00d982',
+        '--button-focus-shadow': '0 0 0 2px #04100b, 0 0 0 4px #00ff95',
+        '--togglebutton-bg': '#00ff95',
+        '--togglebutton-border': '1px solid #00ff95',
+        '--togglebutton-hover-bg': '#00d982',
+        '--togglebutton-hover-border': '1px solid #00d982',
+        '--togglebutton-text-color': '#04100b'
+      }
+    },
+    {
       name: 'Orange',
       primaryColor: '#F7931A',
       accentColors: {

@@ -18,32 +18,32 @@ export class ThemeService {
   private readonly mockSettings: ThemeSettings = {
     colorScheme: 'dark',
     accentColors: {
-      '--primary-color': '#F80421',
-      '--primary-color-text': '#ffffff',
-      '--highlight-bg': '#F80421',
-      '--highlight-text-color': '#ffffff',
-      '--focus-ring': '0 0 0 0.2rem rgba(255,64,50,0.2)',
+      '--primary-color': '#00ff95',
+      '--primary-color-text': '#04100b',
+      '--highlight-bg': '#00ff95',
+      '--highlight-text-color': '#04100b',
+      '--focus-ring': '0 0 0 0.2rem rgba(0,255,149,0.22)',
       // PrimeNG Slider
       '--slider-bg': '#dee2e6',
-      '--slider-range-bg': '#F80421',
-      '--slider-handle-bg': '#F80421',
+      '--slider-range-bg': '#00ff95',
+      '--slider-handle-bg': '#00ff95',
       // Progress Bar
       '--progressbar-bg': '#dee2e6',
-      '--progressbar-value-bg': '#F80421',
+      '--progressbar-value-bg': '#00ff95',
       // PrimeNG Checkbox
-      '--checkbox-border': '#F80421',
-      '--checkbox-bg': '#F80421',
-      '--checkbox-hover-bg': '#e63c2e',
+      '--checkbox-border': '#00ff95',
+      '--checkbox-bg': '#00ff95',
+      '--checkbox-hover-bg': '#00d982',
       // PrimeNG Button
-      '--button-bg': '#F80421',
-      '--button-hover-bg': '#e63c2e',
-      '--button-focus-shadow': '0 0 0 2px #ffffff, 0 0 0 4px #F80421',
+      '--button-bg': '#00ff95',
+      '--button-hover-bg': '#00d982',
+      '--button-focus-shadow': '0 0 0 2px #04100b, 0 0 0 4px #00ff95',
       // Toggle button
-      '--togglebutton-bg': '#F80421',
-      '--togglebutton-border': '1px solid #F80421',
-      '--togglebutton-hover-bg': '#e63c2e',
-      '--togglebutton-hover-border': '1px solid #e63c2e',
-      '--togglebutton-text-color': '#ffffff'
+      '--togglebutton-bg': '#00ff95',
+      '--togglebutton-border': '1px solid #00ff95',
+      '--togglebutton-hover-bg': '#00d982',
+      '--togglebutton-hover-border': '1px solid #00d982',
+      '--togglebutton-text-color': '#04100b'
     }
   };
 
