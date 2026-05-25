@@ -8,11 +8,21 @@
 
 <ng-container *ngIf="info$ | async as info">
     <ng-container *ngFor="let message of messages">
-        <p-message
-            [severity]="message.severity"
-            [text]="message.text"
-            [styleClass]="'w-full mb-3 py-3 border-round-lg'"
-        />
+        <div class="p-inline-message w-full mb-3 py-3 border-round-lg" [ngClass]="'p-inline-message-' + message.severity">
+            <div class="flex justify-content-between align-items-center w-full px-3 gap-3">
+                <span>{{ message.text }}</span>
+                <button
+                    *ngIf="isDismissibleMessage(message)"
+                    type="button"
+                    class="p-link flex-shrink-0"
+                    style="line-height: 1;"
+                    (click)="dismissSystemMessage(message.type)"
+                    pTooltip="Dismiss"
+                    tooltipPosition="left">
+                    <i class="pi pi-times"></i>
+                </button>
+            </div>
+        </div>
     </ng-container>
 
     <div *ngIf="info.showNewBlock" class="p-inline-message p-inline-message-success w-full mb-3 py-3 border-round-lg">

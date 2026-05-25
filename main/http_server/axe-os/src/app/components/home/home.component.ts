@@ -64,6 +64,7 @@ interface ISystemInfoError {
 const HOME_CHART_DATA_SOURCES = 'HOME_CHART_DATA_SOURCES';
 const DASHBOARD_LAYOUT_KEY = 'DASHBOARD_LAYOUT_V1';
 const HIDDEN_WIDGETS_KEY = 'DASHBOARD_HIDDEN_WIDGETS';
+const DISMISSED_SYSTEM_MESSAGES_KEY = 'DISMISSED_SYSTEM_MESSAGES';
 const DEFAULT_CELL_HEIGHT = 40;
 
 const WIDGET_DEFAULTS: WidgetDef[] = [
@@ -192,6 +193,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private lastStatsFrequency: number = 30;
   private lastHiddenTime: number = 0;
   private statsLimit: number = 720;
+  private dismissedSystemMessages = new Set<MessageType>();
 
   @Input() uri = '';
 
@@ -225,6 +227,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.dashboardEditService.widgetDefs = this.widgetDefs;
     this.dashboardEditService.isActive$.next(true);
+    this.loadDismissedSystemMessages();
 
     this.dashboardEditService.editMode$
       .pipe(takeUntil(this.destroy$))
@@ -1034,6 +1037,13 @@ export class HomeComponent implements OnInit, OnDestroy {
       const existingIndex = this.messages.findIndex(msg => msg.type === type);
 
       if (condition) {
+        if (this.dismissedSystemMessages.has(type)) {
+          if (existingIndex !== -1) {
+            this.messages.splice(existingIndex, 1);
+          }
+          return;
+        }
+
         if (existingIndex === -1) {
           this.messages.push({ type, severity, text });
         } else {
@@ -1062,6 +1072,39 @@ export class HomeComponent implements OnInit, OnDestroy {
       updateMessage(percentage > 0 && percentage < 95, 'NOT_SOLO_MINING', 'warn', `Your share of the mining reward is only ${percentage.toFixed(1)}%`);
       updateMessage(percentage === 0, 'NO_MINING_REWARD', 'warn', `You don't have a share in the mining reward`);
     }
+  }
+
+  public isDismissibleMessage(message: ISystemMessage): boolean {
+    return message.type === 'NOT_SOLO_MINING' || message.type === 'NO_MINING_REWARD';
+  }
+
+  public dismissSystemMessage(type: MessageType): void {
+    if (type !== 'NOT_SOLO_MINING' && type !== 'NO_MINING_REWARD') {
+      return;
+    }
+
+    this.dismissedSystemMessages.add(type);
+    this.storageService.setItem(
+      DISMISSED_SYSTEM_MESSAGES_KEY,
+      JSON.stringify([...this.dismissedSystemMessages])
+    );
+    this.messages = this.messages.filter(message => message.type !== type);
+  }
+
+  private loadDismissedSystemMessages(): void {
+    const dismissedMessages = this.storageService.getItem(DISMISSED_SYSTEM_MESSAGES_KEY);
+    if (!dismissedMessages) {
+      return;
+    }
+
+    try {
+      const parsed = JSON.parse(dismissedMessages);
+      if (Array.isArray(parsed)) {
+        this.dismissedSystemMessages = new Set(
+          parsed.filter(type => type === 'NOT_SOLO_MINING' || type === 'NO_MINING_REWARD')
+        );
+      }
+    } catch (e) { }
   }
 
   private calculateEfficiency(info: ISystemInfo, key: 'hashRate' | 'hashRate_1m' | 'expectedHashrate'): number {
