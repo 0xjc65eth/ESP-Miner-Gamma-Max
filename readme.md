@@ -63,6 +63,20 @@ The esp-miner UI is called AxeOS and provides an API to expose actions and infor
 
 For more details take a look at [`main/http_server/openapi.yaml`](./main/http_server/openapi.yaml).
 
+## Cypher Flash Doctor
+
+This fork includes a read-only post-flash diagnostic tool for users who report
+firmware/AxeOS mismatch warnings, high response time, fallback pool usage,
+stale shares, or high ASIC error rate.
+
+```bash
+python3 tools/cypher_flash_doctor.py --host 192.168.1.42
+```
+
+It does not upload firmware or change settings. It only reads
+`/api/system/info` and prints a diagnosis with the next safe action. See
+[`doc/cypher-flash-doctor.md`](./doc/cypher-flash-doctor.md).
+
 Available API endpoints:
   
 **GET**
