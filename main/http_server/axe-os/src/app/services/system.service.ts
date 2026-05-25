@@ -161,6 +161,19 @@ export class SystemApiService {
         coinbaseValueTotalSatoshis: 50,
         coinbaseValueUserSatoshis: 50,
         miningPaused: false,
+        predictiveEfficiency: {
+          enabled: true,
+          autotuneEnabled: true,
+          score: 87.4,
+          hashPerWatt: 67.2,
+          thermalMarginC: 8.5,
+          recommendedAction: "hold",
+          agentState: "monitor",
+          agentReason: "monitoring BM1370 efficiency window",
+          profileName: "BM1370",
+          forkName: "Cypher Gamma Max",
+          creatorTag: "CYPHER-0xJC65ETH"
+        } as any,
       }
     ).pipe(delay(1000));
   }

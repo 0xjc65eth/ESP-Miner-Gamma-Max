@@ -24,6 +24,60 @@
         </div>
     </div>
 
+    <section class="cypher-console mb-3" [ngClass]="getCypherHealthClass(info)">
+        <div class="cypher-console__identity">
+            <div>
+                <div class="cypher-kicker">CYPHER GAMMA MAX</div>
+                <h2>{{ getCypherAgent(info)?.forkName || 'Cypher Agent' }}</h2>
+                <p>{{ getCypherAgent(info)?.creatorTag || 'CYPHER-0xJC65ETH' }}</p>
+            </div>
+            <div class="cypher-sigil" pTooltip="Anonymous telemetry console" tooltipPosition="left">
+                <i class="pi pi-eye"></i>
+            </div>
+        </div>
+
+        <div class="cypher-metrics">
+            <div>
+                <span>Score</span>
+                <strong>{{ getCypherScore(info) | number:'1.0-1' }}</strong>
+            </div>
+            <div>
+                <span>Agent</span>
+                <strong>{{ getCypherState(info) }}</strong>
+            </div>
+            <div>
+                <span>Action</span>
+                <strong>{{ getCypherAction(info) }}</strong>
+            </div>
+            <div>
+                <span>Latency</span>
+                <strong>{{ info.responseTime | number:'1.0-1' }} ms</strong>
+            </div>
+            <div>
+                <span>Errors</span>
+                <strong>{{ info.errorPercentage | number:'1.2-2' }}%</strong>
+            </div>
+            <div>
+                <span>Profile</span>
+                <strong>{{ getCypherAgent(info)?.profileName || info.ASICModel }}</strong>
+            </div>
+        </div>
+
+        <div class="cypher-console__footer">
+            <span>{{ getCypherAgent(info)?.agentReason || 'Watching pool latency, ASIC errors, thermal margin, and share quality.' }}</span>
+            <button
+                type="button"
+                class="p-button p-button-sm cypher-button"
+                (click)="togglePredictiveAutotune(info)"
+                [pTooltip]="getCypherAgent(info)?.autotuneEnabled ? 'Disable autonomous frequency tuning' : 'Enable autonomous frequency tuning'"
+                tooltipPosition="left"
+            >
+                <i class="pi" [ngClass]="getCypherAgent(info)?.autotuneEnabled ? 'pi-pause-circle' : 'pi-play-circle'"></i>
+                <span>{{ getCypherAgent(info)?.autotuneEnabled ? 'Autotune Active' : 'Autotune Standby' }}</span>
+            </button>
+        </div>
+    </section>
+
     <div class="grid-stack" [class.gs-edit-mode]="editMode" #gridStack>
         <!-- Hashrate -->
         <div class="grid-stack-item" gs-id="hashrate">

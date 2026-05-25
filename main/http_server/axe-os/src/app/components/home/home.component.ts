@@ -26,6 +26,19 @@ import { GridStack, GridItemHTMLElement } from 'gridstack';
 import { DashboardEditService, WidgetDef } from 'src/app/services/dashboard-edit.service';
 
 type PoolLabel = 'Primary' | 'Fallback';
+type PredictiveEfficiency = {
+  enabled?: boolean;
+  autotuneEnabled?: boolean;
+  score?: number;
+  hashPerWatt?: number;
+  thermalMarginC?: number;
+  recommendedAction?: string;
+  agentState?: string;
+  agentReason?: string;
+  profileName?: string;
+  forkName?: string;
+  creatorTag?: string;
+};
 type MessageType =
   | 'SYSTEM_INFO_ERROR'
   | 'MINING_PAUSED'
@@ -973,6 +986,42 @@ export class HomeComponent implements OnInit, OnDestroy {
       return (info.coinbaseValueUserSatoshis ?? 0) / info.coinbaseValueTotalSatoshis * 100;
     }
     return -1;
+  }
+
+  public getCypherAgent(info: ISystemInfo): PredictiveEfficiency | null {
+    return ((info as any).predictiveEfficiency ?? null) as PredictiveEfficiency | null;
+  }
+
+  public getCypherScore(info: ISystemInfo): number {
+    return this.getCypherAgent(info)?.score ?? 0;
+  }
+
+  public getCypherState(info: ISystemInfo): string {
+    return this.getCypherAgent(info)?.agentState ?? 'offline';
+  }
+
+  public getCypherAction(info: ISystemInfo): string {
+    return (this.getCypherAgent(info)?.recommendedAction ?? 'observe').replace(/_/g, ' ');
+  }
+
+  public getCypherHealthClass(info: ISystemInfo): string {
+    const agent = this.getCypherAgent(info);
+    if (!agent?.enabled) return 'cypher-muted';
+    if (info.isUsingFallbackStratum || info.responseTime >= 1000 || info.errorPercentage >= 5) return 'cypher-alert';
+    if (agent.agentState === 'trial' || agent.agentState === 'rollback' || agent.agentState === 'throttle') return 'cypher-watch';
+    return 'cypher-live';
+  }
+
+  public togglePredictiveAutotune(info: ISystemInfo): void {
+    const agent = this.getCypherAgent(info);
+    const predictiveAutotune = agent?.autotuneEnabled ? 0 : 1;
+
+    this.systemService.updateSystem('', { predictiveAutotune } as any)
+      .pipe(this.loadingService.lockUIUntilComplete())
+      .subscribe({
+        next: () => this.toastr.success(`Cypher autotune ${predictiveAutotune ? 'enabled' : 'disabled'}`),
+        error: (err: HttpErrorResponse) => this.toastr.error(`Could not update Cypher autotune: ${err.message}`)
+      });
   }
 
   public handleSystemMessages(info: ISystemInfo, systemInfoError: ISystemInfoError) {
