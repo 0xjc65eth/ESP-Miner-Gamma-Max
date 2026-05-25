@@ -43,9 +43,9 @@ Tracked signals:
 
 ## Safety boundary
 
-Autotune is opt-in through the `predictiveAutotune` NVS/API setting. It only changes
-ASIC frequency, and only on BM1368/BM1370 profiles. It does not change voltage, fan
-speed, pool settings, or job scheduling.
+Autotune is enabled by default in this fork through the `predictiveAutotune` NVS/API
+setting. It only changes ASIC frequency, and only on BM1368/BM1370 profiles. It does not
+change voltage, fan speed, pool settings, or job scheduling.
 
 The agent waits for a warm-up window, then makes small 25 MHz trials. It rolls back
 when the score drops, ASIC errors rise, rejected shares rise, or thermal margin is
