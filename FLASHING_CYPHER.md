@@ -171,3 +171,19 @@ Use `--authority experimental` only on supervised test hardware.
 - If the device does not boot correctly, flash `esp-miner-factory.bin` by USB.
 - If you flashed the wrong device type, re-flash an official ESP-Miner factory
   image that matches your Bitaxe hardware, then update again carefully.
+
+## Support
+
+If you see a firmware/AxeOS mismatch warning, fallback pool warning, high ping,
+stale shares, high error rate, or unstable hashrate after flashing, collect the
+dashboard numbers before changing settings.
+
+Support checklist:
+
+[docs/CYPHER_SUPPORT.md](docs/CYPHER_SUPPORT.md)
+
+Paid remote support requests:
+
+```text
+https://github.com/0xjc65eth/bitaxe-flash-doctor/issues/new?template=bitaxe-support.yml
+```
